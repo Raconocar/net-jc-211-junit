@@ -6,6 +6,12 @@ import Library.users.Suppler;
 import Library.users.User;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
+
 
 class SupplerTest {
     private static long suiteStartTime;
@@ -55,6 +61,55 @@ class SupplerTest {
         User testSup = new Suppler(TestSupplierFIO);
         User testLib = new AdministratorLibrarian(TestLibrarianFIO);
         //then
-        Assertions.assertEquals(expected, ((Suppler) testSup).supplyBook((Library) testLib,TestBookTitle));
+        Assertions.assertEquals(expected, ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle));
+    }
+
+    @Test
+    void getSuppliedBooksTest1() {
+        //given
+
+        String TestLibrarianFIO = "Lib Lib Lib";
+        String TestBookTitle1 = "Test Book 1 ";
+        String TestBookTitle2 = "Test Book 2 ";
+        String TestBookTitle3 = "Test Book 3 ";
+        String TestBookTitle4 = "Test Book 4 ";
+        String TestSupplierFIO = "Sup Sup Sup";
+        //when
+        User testSup = new Suppler(TestSupplierFIO);
+        User testLib = new AdministratorLibrarian(TestLibrarianFIO);
+        //then
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle1);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle2);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle3);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle4);
+        List<String> testlist = ((Suppler) testSup).getSuppliedBooks();
+        assertThat(testlist, hasSize(3));
+
+
+    }
+
+    @Test
+    void getSuppliedBooksTest2() {
+        //given
+
+        String TestLibrarianFIO = "Lib Lib Lib";
+        String TestBookTitle1 = "Test Book 1 ";
+        String TestBookTitle2 = "Test Book 2 ";
+        String TestBookTitle3 = "Test Book 3 ";
+        String TestBookTitle4 = "Test Book 4 ";
+        String TestSupplierFIO = "Sup Sup Sup";
+        //when
+        User testSup = new Suppler(TestSupplierFIO);
+        User testLib = new AdministratorLibrarian(TestLibrarianFIO);
+        //then
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle1);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle2);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle3);
+        ((Suppler) testSup).supplyBook((Library) testLib, TestBookTitle4);
+        List<String> testlist = ((Suppler) testSup).getSuppliedBooks();
+
+        assertThat(testlist, hasItem("Test Book 4 "));
+
+
     }
 }
